@@ -1,7 +1,40 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <title>Menu da JSON remoto</title>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+
+<div id="menu"></div>
+
+<script>
+// Funzione per caricare il file JSON da un URL esterno
+function caricaMenuDaJSON() {
+  fetch('https://aneggi.github.io/data/menu.json') // Sostituisci con l'URL del tuo file JSON
+    .then(response => response.json())
+    .then(data => generaMenu(data));
+}
+
+// Funzione per generare il menu
+function generaMenu(menuItems) {
+  const menuDiv = document.getElementById('menu');
+  const ul = document.createElement('ul');
+
+  menuItems.forEach(item => {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.textContent = item.nome;
+    a.href = item.url;
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+
+  menuDiv.appendChild(ul);
+}
+
+// Chiama la funzione per caricare il menu dal JSON quando la pagina si carica
+caricaMenuDaJSON();
+</script>
+
 </body>
 </html>
