@@ -1,0 +1,34 @@
+backend:
+  name: github
+  repo: <OWNER>/<REPO>
+  branch: main
+  base_url: https://<OAUTH-HOST>
+  auth_endpoint: <OAUTH-PATH>
+media_folder: "public/uploads"
+public_folder: "/uploads" # For project pages, set to "/<REPO>/uploads"
+site_url: https://<OWNER>.github.io/<REPO>/
+publish_mode: editorial_workflow
+collections:
+  - name: "blog"
+    label: "Blog"
+    folder: "src/data/post"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Excerpt", name: "excerpt", widget: "text" }
+      - { label: "Publish Date", name: "publishDate", widget: "datetime" }
+      - { label: "Updated Date", name: "updateDate", widget: "datetime", required: false }
+      - { label: "Tags", name: "tags", widget: "list", required: false }
+      - { label: "Category", name: "category", widget: "string", required: false }
+      - { label: "Image", name: "image", widget: "string", required: false }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false, required: false }
+      - label: "Metadata"
+        name: "metadata"
+        widget: "object"
+        required: false
+        fields:
+          - { label: "Canonical URL", name: "canonical", widget: "string", required: false }
+      - { label: "Body", name: "body", widget: "markdown" }

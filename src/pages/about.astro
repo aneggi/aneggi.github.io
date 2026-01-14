@@ -1,0 +1,77 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Content from '~/components/widgets/Content.astro';
+import Features from '~/components/widgets/Features.astro';
+
+const metadata = {
+  title: 'About Alessandro Aneggi',
+};
+---
+
+<Layout metadata={metadata}>
+  <Hero
+    tagline="About"
+    actions={[
+      { variant: 'primary', text: 'Email', href: 'mailto:aaneggi@unibz.it', icon: 'tabler:mail' },
+      { text: 'ORCID', href: 'https://orcid.org/0009-0009-3709-5051', target: '_blank', icon: 'tabler:hexagon' },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80',
+      alt: 'Bolzano landscape',
+    }}
+  >
+    <Fragment slot="title">Researcher, builder, and outdoor enthusiast.</Fragment>
+    <Fragment slot="subtitle">
+      I am a PhD candidate at the Free University of Bozen-Bolzano, designing feedback loops for greener software while
+      teaching, shipping code, and experimenting with DevOps, networking, and security.
+    </Fragment>
+  </Hero>
+
+  <Content
+    title="Current focus"
+    items={[
+      {
+        title: 'Power-aware DevOps',
+        description: 'Embedding energy feedback into developer workflows so teams can see the impact of their changes.',
+      },
+      {
+        title: 'Real-time systems',
+        description: 'Reducing the risk of big-bang integrations in fast-moving environments.',
+      },
+      {
+        title: 'Visiting PhD (2026)',
+        description: 'S2 Group — VU University Amsterdam.',
+      },
+    ]}
+  >
+    <Fragment slot="content">
+      <p>
+        My work blends research and practice. I am happiest when I can prototype an idea, run it with a team, and learn
+        from the feedback loop.
+      </p>
+    </Fragment>
+  </Content>
+
+  <Features
+    title="Academic"
+    items={[
+      { title: 'PhD · Free University of Bozen-Bolzano (2024–now)', description: 'Computer Science.' },
+      { title: 'MSc Researcher · University of Klagenfurt (2023–2024)', description: 'Information Systems.' },
+      { title: "Master's · University of Bolzano (2020–2023)", description: 'Software Engineering for Information Systems.' },
+      { title: "Master's · University of Trento (2009–2012)", description: 'Net Economy — Erasmus at Åbo Akademi, Turku, FI.' },
+      { title: "Bachelor · University of Trento (2004–2008)", description: 'Engineering for Information and Organisation.' },
+    ]}
+  />
+
+  <Features
+    title="Work"
+    items={[
+      { title: 'IT Teacher (2020–2023)', description: 'High school IT courses.' },
+      { title: 'IoT/Robotics Teacher (2017–2020)', description: 'High school teaching in IoT and robotics.' },
+      { title: 'PM & Developer (2015–2017)', description: 'Project management and development for a private company.' },
+      { title: 'Technical product manager & Dev (2013–2015)', description: 'Public company projects.' },
+      { title: 'Dev & Applied Research (2010–2013)', description: 'Engineering roles across private companies.' },
+    ]}
+  />
+</Layout>

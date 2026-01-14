@@ -1,0 +1,192 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+import Hero from '~/components/widgets/Hero.astro';
+import Note from '~/components/widgets/Note.astro';
+import Features from '~/components/widgets/Features.astro';
+import Content from '~/components/widgets/Content.astro';
+import Steps from '~/components/widgets/Steps.astro';
+import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+const metadata = {
+  title: 'Alessandro Aneggi — PhD Researcher in Bolzano',
+  description:
+    'PhD candidate at the Free University of Bozen-Bolzano focused on DevOps, networking, security, and greener software practices.',
+  ignoreTitleTemplate: true,
+};
+---
+
+<Layout metadata={metadata}>
+  <section id="about">
+    <Hero
+      actions={[
+        {
+          variant: 'primary',
+          text: 'Get in touch',
+          href: 'mailto:aaneggi@unibz.it',
+          icon: 'tabler:mail',
+        },
+        { text: 'Read the blog', href: '#blog' },
+      ]}
+      image={{ src: '~/assets/images/hero-image.png', alt: 'Alessandro Aneggi' }}
+    >
+      <Fragment slot="title">
+        Ciao, I’m <span class="text-accent dark:text-white">Alessandro Aneggi</span>
+      </Fragment>
+
+      <Fragment slot="subtitle">
+        Bolzano-based IT lover and PhD researcher at the Free University of Bozen-Bolzano, exploring DevOps, networking,
+        security, and greener software. Building feedback loops, reducing real-time integration risks, and always
+        tinkering with new tech.
+      </Fragment>
+    </Hero>
+  </section>
+
+  <Note
+    title="University of Bolzano · NOI Techpark"
+    description="PhD in Computer Science | DevOps, power consumption feedback, real-time systems, security, networking."
+  />
+
+  <Content
+    id="research"
+    tagline="RQ1 — What I am doing?"
+    title="Current research focus"
+    items={[
+      {
+        title: 'Feedback loops for greener software',
+        description:
+          'Designing ways for developers to estimate and monitor the power consumption of software evolution during daily work.',
+      },
+      {
+        title: 'Real-time systems',
+        description: 'Reducing the risk of “big bang” integrations in fast-moving, real-time environments.',
+      },
+      {
+        title: 'Visiting PhD (2026)',
+        description: 'Incoming visit to the S2 Group at VU University Amsterdam.',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80',
+      alt: 'Research and DevOps',
+    }}
+  >
+    <Fragment slot="content">
+      <p>
+        I build bridges between research and day-to-day engineering, with a special interest in automation that helps
+        teams ship fast while keeping an eye on sustainability and reliability.
+      </p>
+    </Fragment>
+  </Content>
+
+  <Features
+    tagline="RQ2 — What makes me curious?"
+    title="Topics I keep digging into"
+    items={[
+      {
+        title: 'Web · Microservices · Cloud',
+        description:
+          "Cloud isn't one-size-fits-all; I explore how microservices and serverless enable small teams to integrate faster and smarter.",
+        icon: 'tabler:cloud-computing',
+      },
+      {
+        title: 'Software quality · Testing · Security',
+        description:
+          'Quality, tests, and security team up to create resilient digital tools. It is about building sturdy, reliable systems—not just fixing bugs.',
+        icon: 'tabler:shield-check',
+      },
+    ]}
+  />
+
+  <section id="academic">
+    <Steps
+      title="Academic path"
+      items={[
+        {
+          title: 'PhD · Free University of Bozen-Bolzano (2024–now)',
+          description: 'Computer Science — focus on power-aware DevOps (with visit to VU University Amsterdam, 2026).',
+          icon: 'tabler:school',
+        },
+        {
+          title: 'MSc Researcher · University of Klagenfurt (2023–2024)',
+          description: 'Researcher in Information Systems.',
+          icon: 'tabler:flask',
+        },
+        {
+          title: "Master's in Software Engineering · University of Bolzano (2020–2023)",
+          description: 'Information Systems specialization.',
+          icon: 'tabler:code',
+        },
+        {
+          title: "Master's in Net Economy · University of Trento (2009–2012)",
+          description: 'Technology and management of information and knowledge (Erasmus at Åbo Akademi, Turku, FI).',
+          icon: 'tabler:world',
+        },
+        {
+          title: 'Bachelor in Engineering · University of Trento (2004–2008)',
+          description: 'Information and organisation, plus junior research on virtual community portals.',
+          icon: 'tabler:cpu',
+        },
+      ]}
+    />
+  </section>
+
+  <section id="work">
+    <Features
+      tagline="Experience"
+      title="Work so far"
+      items={[
+        { title: '2020–2023 · IT Teacher', description: 'High school teaching in IT.' },
+        { title: '2017–2020 · IoT/Robotics Teacher', description: 'High school teaching in IoT and robotics.' },
+        { title: '2015–2017 · PM & Dev', description: 'Project manager and developer for a private company.' },
+        { title: '2013–2015 · Technical product manager & Dev', description: 'Building solutions for a public company.' },
+        { title: '2010–2013 · Dev & Applied Research', description: 'Engineering roles across private companies.' },
+      ]}
+    />
+  </section>
+
+  <Content
+    id="personal"
+    tagline="Personal"
+    title="A few quick notes"
+    items={[
+      { title: 'Builder mindset', description: "Innovative, creative, and always thinking a bit 'out of the box'." },
+      { title: 'Learner', description: 'Quick to pick up new ideas and tech; eager to improve skills continuously.' },
+      { title: 'Outdoors', description: 'Photography fan; loves climbing and cycling.' },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=1200&q=80',
+      alt: 'Mountains near Bolzano',
+    }}
+  >
+    <Fragment slot="content">
+      <p>
+        Outside the lab I recharge by being outdoors. If you want to talk research, mountain trails, or bikes, I am up
+        for it.
+      </p>
+    </Fragment>
+  </Content>
+
+  <section id="blog">
+    <BlogLatestPosts
+      title="Green reads"
+      information="Notes from the articles and papers I read about greener software, power-aware engineering, and sustainable tech. Fresh posts land here as I learn."
+    />
+  </section>
+
+  <section id="contact">
+    <CallToAction
+      actions={[
+        { variant: 'primary', text: 'Email me', href: 'mailto:aaneggi@unibz.it', icon: 'tabler:mail' },
+        { text: 'ORCID', href: 'https://orcid.org/0009-0009-3709-5051', target: '_blank', icon: 'tabler:hexagon' },
+      ]}
+    >
+      <Fragment slot="title">Let’s collaborate</Fragment>
+
+      <Fragment slot="subtitle">
+        Free University of Bozen-Bolzano — NOI Techpark B1.4.26 · Bruno-Buozzi-Straße 1 · Bolzano, Italy · aaneggi(at)unibz(dot)it
+      </Fragment>
+    </CallToAction>
+  </section>
+</Layout>
