@@ -11,24 +11,31 @@ publish_mode: editorial_workflow
 collections:
   - name: "blog"
     label: "Blog"
-    folder: "src/data/post"
+    folder: "src/content/blog"
     create: true
     slug: "{{slug}}"
     extension: "md"
     format: "frontmatter"
     fields:
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Excerpt", name: "excerpt", widget: "text" }
-      - { label: "Publish Date", name: "publishDate", widget: "datetime" }
-      - { label: "Updated Date", name: "updateDate", widget: "datetime", required: false }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "SEO Title", name: "seoTitle", widget: "string", required: false }
+      - { label: "Publish Date", name: "pubDate", widget: "datetime" }
+      - { label: "Updated Date", name: "updatedDate", widget: "datetime", required: false }
       - { label: "Tags", name: "tags", widget: "list", required: false }
-      - { label: "Category", name: "category", widget: "string", required: false }
-      - { label: "Image", name: "image", widget: "string", required: false }
-      - { label: "Draft", name: "draft", widget: "boolean", default: false, required: false }
-      - label: "Metadata"
-        name: "metadata"
-        widget: "object"
-        required: false
-        fields:
-          - { label: "Canonical URL", name: "canonical", widget: "string", required: false }
       - { label: "Body", name: "body", widget: "markdown" }
+  - name: "publications"
+    label: "Publications"
+    folder: "src/content/publications"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Publish Date", name: "pubDate", widget: "datetime" }
+      - { label: "Venue", name: "venue", widget: "string", required: false }
+      - { label: "Link", name: "link", widget: "string", required: false }
+      - { label: "Tags", name: "tags", widget: "list", required: false }
+      - { label: "Body", name: "body", widget: "markdown", required: false }

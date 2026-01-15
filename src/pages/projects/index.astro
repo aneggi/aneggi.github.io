@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectList from '../../components/ProjectList.astro';
+import { projects } from '../../data/projects';
+
+---
+
+<BaseLayout
+	title="Projects & experiments"
+	description="Prototypes and experiments around energy-aware DevOps and real-time telemetry."
+>
+  <div class='container'>
+    <div class="mb-10">
+      <h1 class="text-3xl font-bold mb-2">Projects & experiments</h1>
+      <p class="text-zinc-700 dark:text-zinc-300 text-lg">Prototypes that explore feedback loops, telemetry, and sustainable software.</p>
+    </div>
+    <ProjectList projects={projects}/>
+  </div>
+</BaseLayout>

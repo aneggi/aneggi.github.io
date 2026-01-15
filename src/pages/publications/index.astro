@@ -1,0 +1,30 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PublicationItem from '../../components/PublicationItem.astro';
+import profile from '../../data/profile.json';
+
+const publications = (await getCollection('publications')).sort(
+  (a: CollectionEntry<'publications'>, b: CollectionEntry<'publications'>) =>
+    b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+const title = 'Publications';
+const description = 'Research outputs, talks, and papers.';
+---
+
+<BaseLayout title={`${title} — ${profile.name}`} description={description}>
+  <div class='container'>
+    <div class="mb-10">
+      <h1 class="text-3xl font-bold mb-2">{title}</h1>
+      <p class="text-zinc-700 dark:text-zinc-300 text-lg">{description}</p>
+    </div>
+    <div>
+      {
+        publications.map((publication) => (
+          <PublicationItem publication={publication} />
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>

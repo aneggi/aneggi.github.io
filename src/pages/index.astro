@@ -1,192 +1,98 @@
 ---
-import Layout from '~/layouts/PageLayout.astro';
+import { SITE_TITLE, SITE_TAGLINE, SITE_DESCRIPTION } from '../consts';
+import profile from '../data/profile.json';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import Ava from '@src/assets/img/alessandro_a.jpg';
+import Prose from '../components/Prose.astro';
+import PostItem from '../components/PostItem.astro';
+import PublicationItem from '../components/PublicationItem.astro';
 
-import Hero from '~/components/widgets/Hero.astro';
-import Note from '~/components/widgets/Note.astro';
-import Features from '~/components/widgets/Features.astro';
-import Content from '~/components/widgets/Content.astro';
-import Steps from '~/components/widgets/Steps.astro';
-import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
-import CallToAction from '~/components/widgets/CallToAction.astro';
+type BlogPost = CollectionEntry<'blog'>;
+type PubEntry = CollectionEntry<'publications'>;
 
-const metadata = {
-  title: 'Alessandro Aneggi — PhD Researcher in Bolzano',
-  description:
-    'PhD candidate at the Free University of Bozen-Bolzano focused on DevOps, networking, security, and greener software practices.',
-  ignoreTitleTemplate: true,
-};
+const posts = (await getCollection('blog'))
+  .sort((a: BlogPost, b: BlogPost) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 4);
+
+const publications = (await getCollection('publications'))
+  .sort((a: PubEntry, b: PubEntry) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 4);
+
+const latestPost = posts[0];
+const latestPublication = publications[0];
 ---
 
-<Layout metadata={metadata}>
-  <section id="about">
-    <Hero
-      actions={[
+<BaseLayout title={SITE_TITLE + ' - ' + SITE_TAGLINE} description={SITE_DESCRIPTION}>
+  <div class='container'>
+    <div class='w-full md:flex md:items-center gap-16 mb-10'>
+      <div class="text-pretty leading-9">
+        <h1 class="text-4xl font-bold mb-4">Ciao, I am {profile.name}.</h1>
+        <Prose>
+          <div class="text-lg">
+            <p class="text-xl leading-relaxed">{profile.tagline}</p>
+            {
+              profile.summary.map((item) => (
+                <p>{item}</p>
+              ))
+            }
+            <div class="flex flex-wrap gap-3 mt-3">
+              <a class="underline font-semibold" href={`mailto:${profile.email}`}>Email</a>
+              <a class="underline font-semibold" href={profile.social.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+              <a class="underline font-semibold" href={profile.orcid} target="_blank" rel="noopener noreferrer">ORCID</a>
+            </div>
+          </div>
+        </Prose>
+      </div>
+      <Image src={Ava} alt={profile.name} width={300} loading="eager" class="rounded-3xl rotate-3 mx-4 md:mx-0"/>
+    </div>
+    <main>
+      <div class="grid gap-6 md:grid-cols-2 mb-10">
         {
-          variant: 'primary',
-          text: 'Get in touch',
-          href: 'mailto:aaneggi@unibz.it',
-          icon: 'tabler:mail',
-        },
-        { text: 'Read the blog', href: '#blog' },
-      ]}
-      image={{ src: '~/assets/images/hero-image.png', alt: 'Alessandro Aneggi' }}
-    >
-      <Fragment slot="title">
-        Ciao, I’m <span class="text-accent dark:text-white">Alessandro Aneggi</span>
-      </Fragment>
-
-      <Fragment slot="subtitle">
-        Bolzano-based IT lover and PhD researcher at the Free University of Bozen-Bolzano, exploring DevOps, networking,
-        security, and greener software. Building feedback loops, reducing real-time integration risks, and always
-        tinkering with new tech.
-      </Fragment>
-    </Hero>
-  </section>
-
-  <Note
-    title="University of Bolzano · NOI Techpark"
-    description="PhD in Computer Science | DevOps, power consumption feedback, real-time systems, security, networking."
-  />
-
-  <Content
-    id="research"
-    tagline="RQ1 — What I am doing?"
-    title="Current research focus"
-    items={[
-      {
-        title: 'Feedback loops for greener software',
-        description:
-          'Designing ways for developers to estimate and monitor the power consumption of software evolution during daily work.',
-      },
-      {
-        title: 'Real-time systems',
-        description: 'Reducing the risk of “big bang” integrations in fast-moving, real-time environments.',
-      },
-      {
-        title: 'Visiting PhD (2026)',
-        description: 'Incoming visit to the S2 Group at VU University Amsterdam.',
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80',
-      alt: 'Research and DevOps',
-    }}
-  >
-    <Fragment slot="content">
-      <p>
-        I build bridges between research and day-to-day engineering, with a special interest in automation that helps
-        teams ship fast while keeping an eye on sustainability and reliability.
-      </p>
-    </Fragment>
-  </Content>
-
-  <Features
-    tagline="RQ2 — What makes me curious?"
-    title="Topics I keep digging into"
-    items={[
-      {
-        title: 'Web · Microservices · Cloud',
-        description:
-          "Cloud isn't one-size-fits-all; I explore how microservices and serverless enable small teams to integrate faster and smarter.",
-        icon: 'tabler:cloud-computing',
-      },
-      {
-        title: 'Software quality · Testing · Security',
-        description:
-          'Quality, tests, and security team up to create resilient digital tools. It is about building sturdy, reliable systems—not just fixing bugs.',
-        icon: 'tabler:shield-check',
-      },
-    ]}
-  />
-
-  <section id="academic">
-    <Steps
-      title="Academic path"
-      items={[
+          latestPost && (
+            <div class="rounded-2xl border dark:border-zinc-700 bg-white dark:bg-zinc-900 p-4 shadow-sm">
+              <p class="text-sm uppercase tracking-wide text-zinc-500 dark:text-zinc-400">Latest post</p>
+              <PostItem post={latestPost} />
+            </div>
+          )
+        }
         {
-          title: 'PhD · Free University of Bozen-Bolzano (2024–now)',
-          description: 'Computer Science — focus on power-aware DevOps (with visit to VU University Amsterdam, 2026).',
-          icon: 'tabler:school',
-        },
-        {
-          title: 'MSc Researcher · University of Klagenfurt (2023–2024)',
-          description: 'Researcher in Information Systems.',
-          icon: 'tabler:flask',
-        },
-        {
-          title: "Master's in Software Engineering · University of Bolzano (2020–2023)",
-          description: 'Information Systems specialization.',
-          icon: 'tabler:code',
-        },
-        {
-          title: "Master's in Net Economy · University of Trento (2009–2012)",
-          description: 'Technology and management of information and knowledge (Erasmus at Åbo Akademi, Turku, FI).',
-          icon: 'tabler:world',
-        },
-        {
-          title: 'Bachelor in Engineering · University of Trento (2004–2008)',
-          description: 'Information and organisation, plus junior research on virtual community portals.',
-          icon: 'tabler:cpu',
-        },
-      ]}
-    />
-  </section>
-
-  <section id="work">
-    <Features
-      tagline="Experience"
-      title="Work so far"
-      items={[
-        { title: '2020–2023 · IT Teacher', description: 'High school teaching in IT.' },
-        { title: '2017–2020 · IoT/Robotics Teacher', description: 'High school teaching in IoT and robotics.' },
-        { title: '2015–2017 · PM & Dev', description: 'Project manager and developer for a private company.' },
-        { title: '2013–2015 · Technical product manager & Dev', description: 'Building solutions for a public company.' },
-        { title: '2010–2013 · Dev & Applied Research', description: 'Engineering roles across private companies.' },
-      ]}
-    />
-  </section>
-
-  <Content
-    id="personal"
-    tagline="Personal"
-    title="A few quick notes"
-    items={[
-      { title: 'Builder mindset', description: "Innovative, creative, and always thinking a bit 'out of the box'." },
-      { title: 'Learner', description: 'Quick to pick up new ideas and tech; eager to improve skills continuously.' },
-      { title: 'Outdoors', description: 'Photography fan; loves climbing and cycling.' },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=1200&q=80',
-      alt: 'Mountains near Bolzano',
-    }}
-  >
-    <Fragment slot="content">
-      <p>
-        Outside the lab I recharge by being outdoors. If you want to talk research, mountain trails, or bikes, I am up
-        for it.
-      </p>
-    </Fragment>
-  </Content>
-
-  <section id="blog">
-    <BlogLatestPosts
-      title="Green reads"
-      information="Notes from the articles and papers I read about greener software, power-aware engineering, and sustainable tech. Fresh posts land here as I learn."
-    />
-  </section>
-
-  <section id="contact">
-    <CallToAction
-      actions={[
-        { variant: 'primary', text: 'Email me', href: 'mailto:aaneggi@unibz.it', icon: 'tabler:mail' },
-        { text: 'ORCID', href: 'https://orcid.org/0009-0009-3709-5051', target: '_blank', icon: 'tabler:hexagon' },
-      ]}
-    >
-      <Fragment slot="title">Let’s collaborate</Fragment>
-
-      <Fragment slot="subtitle">
-        Free University of Bozen-Bolzano — NOI Techpark B1.4.26 · Bruno-Buozzi-Straße 1 · Bolzano, Italy · aaneggi(at)unibz(dot)it
-      </Fragment>
-    </CallToAction>
-  </section>
-</Layout>
+          latestPublication && (
+            <div class="rounded-2xl border dark:border-zinc-700 bg-white dark:bg-zinc-900 p-4 shadow-sm">
+              <p class="text-sm uppercase tracking-wide text-zinc-500 dark:text-zinc-400">Latest publication</p>
+              <PublicationItem publication={latestPublication} />
+            </div>
+          )
+        }
+      </div>
+      <div class='mt-6 mb-12'>
+        <div class="flex justify-between gap-2 border-b mb-1 dark:border-b-zinc-700">
+          <h2 class="text-lg font-bold mb-3">Recent Posts</h2>
+          <a href="/posts/" class="inline-block py-2 underline dark:prose-invert">All posts »</a>
+        </div>
+        <div>
+          {
+            posts.map((post: BlogPost) => (
+              <PostItem post={post} />
+            ))
+          }      
+        </div>
+      </div>
+      <div class='mt-10 mb-4'>
+        <div class="flex justify-between gap-2 border-b mb-1 dark:border-b-zinc-700">
+          <h2 class="text-lg font-bold mb-3">Recent Publications</h2>
+          <a href="/publications/" class="inline-block py-2 underline dark:prose-invert">All publications »</a>
+        </div>
+        <div>
+          {
+            publications.map((publication: PubEntry) => (
+              <PublicationItem publication={publication} />
+            ))
+          }
+        </div>
+      </div>
+    </main>
+  </div>
+</BaseLayout>

@@ -1,77 +1,67 @@
 ---
-import Layout from '~/layouts/PageLayout.astro';
-import Hero from '~/components/widgets/Hero.astro';
-import Content from '~/components/widgets/Content.astro';
-import Features from '~/components/widgets/Features.astro';
+import profile from '../data/profile.json';
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Ava from '@src/assets/img/alessandro_a.jpg';
+import Prose from '../components/Prose.astro';
 
-const metadata = {
-  title: 'About Alessandro Aneggi',
-};
 ---
 
-<Layout metadata={metadata}>
-  <Hero
-    tagline="About"
-    actions={[
-      { variant: 'primary', text: 'Email', href: 'mailto:aaneggi@unibz.it', icon: 'tabler:mail' },
-      { text: 'ORCID', href: 'https://orcid.org/0009-0009-3709-5051', target: '_blank', icon: 'tabler:hexagon' },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80',
-      alt: 'Bolzano landscape',
-    }}
-  >
-    <Fragment slot="title">Researcher, builder, and outdoor enthusiast.</Fragment>
-    <Fragment slot="subtitle">
-      I am a PhD candidate at the Free University of Bozen-Bolzano, designing feedback loops for greener software while
-      teaching, shipping code, and experimenting with DevOps, networking, and security.
-    </Fragment>
-  </Hero>
-
-  <Content
-    title="Current focus"
-    items={[
-      {
-        title: 'Power-aware DevOps',
-        description: 'Embedding energy feedback into developer workflows so teams can see the impact of their changes.',
-      },
-      {
-        title: 'Real-time systems',
-        description: 'Reducing the risk of big-bang integrations in fast-moving environments.',
-      },
-      {
-        title: 'Visiting PhD (2026)',
-        description: 'S2 Group — VU University Amsterdam.',
-      },
-    ]}
-  >
-    <Fragment slot="content">
-      <p>
-        My work blends research and practice. I am happiest when I can prototype an idea, run it with a team, and learn
-        from the feedback loop.
-      </p>
-    </Fragment>
-  </Content>
-
-  <Features
-    title="Academic"
-    items={[
-      { title: 'PhD · Free University of Bozen-Bolzano (2024–now)', description: 'Computer Science.' },
-      { title: 'MSc Researcher · University of Klagenfurt (2023–2024)', description: 'Information Systems.' },
-      { title: "Master's · University of Bolzano (2020–2023)", description: 'Software Engineering for Information Systems.' },
-      { title: "Master's · University of Trento (2009–2012)", description: 'Net Economy — Erasmus at Åbo Akademi, Turku, FI.' },
-      { title: "Bachelor · University of Trento (2004–2008)", description: 'Engineering for Information and Organisation.' },
-    ]}
-  />
-
-  <Features
-    title="Work"
-    items={[
-      { title: 'IT Teacher (2020–2023)', description: 'High school IT courses.' },
-      { title: 'IoT/Robotics Teacher (2017–2020)', description: 'High school teaching in IoT and robotics.' },
-      { title: 'PM & Developer (2015–2017)', description: 'Project management and development for a private company.' },
-      { title: 'Technical product manager & Dev (2013–2015)', description: 'Public company projects.' },
-      { title: 'Dev & Applied Research (2010–2013)', description: 'Engineering roles across private companies.' },
-    ]}
-  />
-</Layout>
+<BaseLayout
+	title={`About ${profile.name}`}
+	description={profile.siteDescription}
+>
+  <div class='container'>
+		<main class='prose text-lg dark:prose-invert'>
+      <article>
+        <div class='w-full md:flex md:items-center gap-16 mb-10'>
+          <div class="text-pretty leading-9">
+            <h1 class="text-4xl font-bold mb-4">{profile.name}</h1>
+            <Prose>
+              <div class="text-lg">
+                <p class="text-xl leading-relaxed">{profile.tagline}</p>
+                {
+                  profile.summary.map((item) => (
+                    <p>{item}</p>
+                  ))
+                }
+                <p>Based in {profile.location}. Reach me at <a href={`mailto:${profile.email}`} class="underline">{profile.email}</a> or find my ORCID at <a href={profile.orcid} class="underline" target="_blank" rel="noopener noreferrer">0009-0009-3709-5051</a>.</p>
+              </div>
+            </Prose>
+          </div>
+          <Image src={Ava} alt={profile.name} width={320}  class="rounded-3xl rotate-3 mx-4 md:mx-0"/>
+        </div>     
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold mb-3">What I am focused on</h2>
+          <ul class="list-disc pl-5 space-y-2">
+            {
+              profile.focus.map((item) => (
+                <li>
+                  <strong>{item.title}.</strong> {item.description}
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold mb-3">Education & milestones</h2>
+          <ul class="list-disc pl-5 space-y-1">
+            {
+              profile.experience.map((item) => (
+                <li>{item}</li>
+              ))
+            }
+          </ul>
+        </section>
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold mb-3">Connect</h2>
+          <ul class="list-disc pl-5 space-y-1">
+            <li><a class="underline" href={`mailto:${profile.email}`}>Email</a></li>
+            <li><a class="underline" href={profile.social.github} target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            <li><a class="underline" href={profile.orcid} target="_blank" rel="noopener noreferrer">ORCID</a></li>
+          </ul>
+        </section>
+      </article>
+    </main>
+  </div>
+</BaseLayout>

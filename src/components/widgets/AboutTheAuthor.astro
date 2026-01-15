@@ -1,0 +1,20 @@
+---
+import profile from '@src/data/profile.json';
+import Author from '../Author.astro';
+---
+
+<div
+	class='about-the-author py-4 border-b'
+>
+	<h3 class='font-extrabold uppercase mb-4 text-sm'>About the Author</h3>
+	<Author picSize='md' />
+	<div class='author-desc text-[.825rem] my-4'>
+		<p class='mb-3'>
+			{profile.name} is a Bolzano-based PhD researcher working on power-aware DevOps and sustainable software. He shares notes on how to surface energy signals in developer workflows.
+		</p>
+		<p>
+      Reach out at <a class="underline" href={`mailto:${profile.email}`}>{profile.email}</a> or connect via <a class="underline" href={profile.orcid} target="_blank" rel="noopener noreferrer">ORCID</a>.
+    </p>
+	</div>
+</div>
+
