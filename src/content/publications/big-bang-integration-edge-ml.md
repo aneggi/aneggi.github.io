@@ -8,6 +8,7 @@ tags:
   - edge-computing
   - machine-learning
   - integration
+lang: en
 ---
 
 Authors: A. Aneggi, A. Janes.

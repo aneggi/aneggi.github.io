@@ -1,13 +1,18 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
+import { SUPPORTED_LANGS, type Lang } from '@src/i18n/config';
 
 type Props = HTMLAttributes<'a'>;
 
-const { href, class: className, ...props } = Astro.props;
+const { href = '', class: className, ...props } = Astro.props as Props;
 
 const { pathname } = Astro.url;
-const subpath = pathname.match(/[^\/]+/g);
-const isActive = href === pathname || href === '/' + subpath?.[0];
+const normalize = (value: string) => value.replace(/\/+$/, '') || '/';
+const normalizedHref = normalize(href);
+const normalizedPath = normalize(pathname);
+const parts = normalizedPath.split('/').filter(Boolean);
+const strippedLangPath = SUPPORTED_LANGS.includes(parts[0] as Lang) ? '/' + parts.slice(1).join('/') : normalizedPath;
+const isActive = normalizedHref === normalizedPath || normalizedHref === strippedLangPath;
 ---
 
 <a

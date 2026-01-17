@@ -1,0 +1,40 @@
+---
+import { LANG_NAMES, SUPPORTED_LANGS, switchLangInPath, type Lang } from '@src/i18n/config';
+import { getUiCopy } from '@src/i18n/ui';
+
+interface Props {
+  lang: Lang;
+  currentPath?: string;
+}
+
+const { lang, currentPath = '/' } = Astro.props as Props;
+const copy = getUiCopy(lang);
+
+const options = SUPPORTED_LANGS.map((code) => ({
+  code,
+  href: switchLangInPath(currentPath, code),
+  label: LANG_NAMES[code],
+  active: code === lang,
+}));
+---
+
+<div class="flex items-center gap-1">
+  <span class="sr-only">{copy.languageToggleLabel}</span>
+  {
+    options.map(({ href, label, active, code }) => (
+      <a
+        class:list={[
+          'px-2 py-1 rounded-full text-xs font-semibold border transition',
+          active
+            ? 'bg-zinc-900 text-white border-zinc-900 dark:bg-white dark:text-zinc-900 dark:border-white'
+            : 'bg-white text-zinc-700 border-zinc-300 hover:bg-zinc-100 dark:bg-zinc-800 dark:text-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-700',
+        ]}
+        href={href}
+        aria-current={active ? 'true' : 'false'}
+        lang={code}
+      >
+        {label}
+      </a>
+    ))
+  }
+</div>

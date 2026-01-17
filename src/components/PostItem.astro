@@ -2,16 +2,18 @@
 import { slugify, tagColorClass } from '../utils';
 import FormattedDate from './FormattedDate.astro';
 import type { CollectionEntry } from 'astro:content';
+import { withLangPrefix, DEFAULT_LANG, type Lang, stripLangFromSlug } from '@src/i18n/config';
 
 type BlogPost = CollectionEntry<'blog'>;
-const { post }: Record<string, any> | { post: BlogPost } = Astro.props
+const { post, lang = DEFAULT_LANG }: { post: BlogPost; lang?: Lang } = Astro.props;
+const postSlug = stripLangFromSlug(post.slug || post.id);
 ---
 <div class='flex flex-col sm:flex-row gap-2 sm:items-center  border-b py-2 mb-1 capitalize dark:border-b-zinc-700'>        
   <div class='text-zinc-700 text-sm w-24 dark:text-zinc-300 shrink-0'>
-    <FormattedDate date={post.data.pubDate} />
+    <FormattedDate date={post.data.pubDate} lang={lang} />
   </div>
   <h3 class='font-medium grow'>
-    <a href={`/${post.id}/`}>
+    <a href={withLangPrefix(`/${postSlug}/`, lang)}>
       {post.data.title}
     </a>
   </h3>
@@ -20,7 +22,7 @@ const { post }: Record<string, any> | { post: BlogPost } = Astro.props
       (post.data.tags || [] )?.map((tag: string) => (
         <a
           class={`border rounded-2xl text-sm no-underline px-2 py-0.5 transition-all duration-700 hover:opacity-80 ${tagColorClass(tag)}`}
-          href={`/tags/${slugify(tag)}`}>
+          href={withLangPrefix(`/tags/${slugify(tag)}/`, lang)}>
           {tag}
         </a>
       ))

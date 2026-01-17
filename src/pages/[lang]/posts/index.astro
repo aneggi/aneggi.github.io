@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '@src/layouts/BaseLayout.astro';
+import PostsByYear from '@src/components/PostsByYear.astro';
+import { getProfile } from '@src/data/profile';
+import { getUiCopy } from '@src/i18n/ui';
+import { resolveLang, SUPPORTED_LANGS, type Lang } from '@src/i18n/config';
+
+type BlogPost = CollectionEntry<'blog'>;
+
+export function getStaticPaths() {
+  return SUPPORTED_LANGS.map((lang: Lang) => ({ params: { lang } }));
+}
+
+const lang = resolveLang(Astro.params.lang);
+const profile = getProfile(lang);
+const copy = getUiCopy(lang);
+
+const title = `${copy.posts.title} — ${profile.name}`;
+const description = copy.posts.description;
+
+const posts = (await getCollection('blog'))
+  .filter((entry) => entry.data.lang === lang)
+  .sort((a: BlogPost, b: BlogPost) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout
+	title={title}
+	description={description}
+  lang={lang}
+>
+  <div class='container'>
+    <div class="mb-10">
+      <h1 class="text-3xl font-bold mb-2">{title}</h1>
+      <p class="text-zinc-700 dark:text-zinc-300 text-lg">{description}</p>
+    </div>
+    <section class="mb-10">
+      <h2 class="text-2xl font-semibold mb-4">{copy.posts.articlesHeading}</h2>
+      <PostsByYear posts={posts} lang={lang}/>
+    </section>
+  </div>
+</BaseLayout>

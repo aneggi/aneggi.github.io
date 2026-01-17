@@ -1,13 +1,16 @@
 ---
 import { Image } from 'astro:assets';
 import Ava from '@src/assets/img/alessandro_a.jpg';
-import profile from '@src/data/profile.json';
+import { getProfile } from '@src/data/profile';
+import { DEFAULT_LANG, type Lang } from '@src/i18n/config';
 
 type PicSize = 'sm' | 'md' | 'lg';
 interface Props {
 	picSize: PicSize;
+  lang?: Lang;
 }
-const { picSize } = Astro.props;
+const { picSize, lang = DEFAULT_LANG } = Astro.props as Props;
+const profile = getProfile(lang);
 ---
 
 <div class='flex gap-4 items-center leading-tight not-prose'>

@@ -8,6 +8,7 @@ tags:
   - energy
   - devops
   - telemetry
+lang: en
 ---
 
 I have been reading about how to surface power consumption to developers without slowing delivery. A few themes stand

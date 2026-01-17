@@ -1,0 +1,87 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import BaseLayout from '@src/layouts/BaseLayout.astro';
+import { slugify, unslugify } from '@src/utils';
+import PostsByYear from '@src/components/PostsByYear.astro';
+import PublicationItem from '@src/components/PublicationItem.astro';
+import { resolveLang, SUPPORTED_LANGS, type Lang } from '@src/i18n/config';
+import { getUiCopy } from '@src/i18n/ui';
+
+type BlogPost = CollectionEntry<'blog'>;
+type PubEntry = CollectionEntry<'publications'>;
+
+export const getStaticPaths = async () => {
+  const paths: { params: { lang: Lang; tag: string } }[] = [];
+
+  for (const lang of SUPPORTED_LANGS) {
+    const allPosts: BlogPost[] = (await getCollection('blog')).filter((entry) => entry.data.lang === lang);
+    const allPubs: PubEntry[] = (await getCollection('publications')).filter((entry) => entry.data.lang === lang);
+    const tags = [
+      ...new Set(
+        [
+          ...allPosts.flatMap((post) => post.data.tags || []),
+          ...allPubs.flatMap((pub) => pub.data.tags || []),
+        ].filter((tag) => !!tag)
+      )
+    ];
+
+    tags.forEach((tag) => paths.push({ params: { lang, tag: slugify(tag || '') } }));
+  }
+
+  return paths;
+};
+
+const { tag } = Astro.params;
+const lang = resolveLang(Astro.params.lang);
+const copy = getUiCopy(lang);
+
+const allPosts: BlogPost[] = (await getCollection('blog'))
+  .filter((entry) => entry.data.lang === lang)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const taggedPosts = allPosts.filter((post) => post.data.tags?.map((tag) => slugify(tag)).includes(tag || ''));
+
+const allPubs: PubEntry[] = (await getCollection('publications')).filter((entry) => entry.data.lang === lang);
+const taggedPubs = allPubs.filter((pub) => pub.data.tags?.map((tag) => slugify(tag)).includes(tag || ''));
+
+const readableTag = unslugify(tag || '');
+const title = `${copy.tagDetail.titlePrefix} ${readableTag}`;
+const description = `${copy.tagDetail.descriptionPrefix} ${readableTag}.`;
+---
+
+<BaseLayout
+	title={title}
+	description={description}
+  lang={lang}
+>
+  <div class='container'>
+    <div class="mb-10">
+      <h1 class="text-3xl font-bold mb-2">{title}</h1>
+    </div>
+    {
+      taggedPosts.length > 0 && (
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold mb-4">{copy.tagDetail.articlesHeading}</h2>
+          <PostsByYear posts={taggedPosts} lang={lang}/>
+        </section>
+      )
+    }
+    {
+      taggedPubs.length > 0 && (
+        <section class="mb-8">
+          <h2 class="text-2xl font-semibold mb-3">{copy.tagDetail.publicationsHeading}</h2>
+          <div>
+            {taggedPubs.map((publication) => (
+              <PublicationItem publication={publication} lang={lang} />
+            ))}
+          </div>
+        </section>
+      )
+    }
+    {
+      taggedPosts.length === 0 && taggedPubs.length === 0 && (
+        <p class="text-zinc-700 dark:text-zinc-300">{copy.tagDetail.empty}</p>
+      )
+    }
+  </div>
+</BaseLayout>

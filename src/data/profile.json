@@ -1,44 +1,80 @@
 {
   "name": "Alessandro Aneggi",
-  "headline": "Power-aware DevOps & sustainable software",
-  "tagline": "PhD researcher in Bolzano exploring feedback loops for greener software and resilient real-time systems.",
-  "siteDescription": "Notes on power-aware DevOps, greener software, and real-time systems research by Alessandro Aneggi.",
-  "location": "Bolzano, Italy",
   "email": "aaneggi@unibz.it",
   "orcid": "https://orcid.org/0009-0009-3709-5051",
   "website": "https://aneggi.github.io/",
   "social": {
     "github": "https://github.com/aneggi",
     "linkedin": "https://www.linkedin.com/in/alessandro-aneggi/",
-    "youtube": "https://www.youtube.com/@aneggi",
+    "youtube": "https://www.youtube.com/@AlessandroAneggi",
     "scholar": "https://scholar.google.com/citations?user=OgX2LvkAAAAJ&hl=it",
     "orcid": "https://orcid.org/0009-0009-3709-5051",
     "email": "mailto:aaneggi@unibz.it"
   },
-  "summary": [
-    "Bolzano-based PhD candidate at the Free University of Bozen-Bolzano designing developer-facing energy feedback loops.",
-    "Explores how CI/CD telemetry and real-time systems can stay reliable while exposing power consumption to teams.",
-    "Open to collaborations on sustainable software, DevOps automation, and energy-aware tooling."
-  ],
-  "focus": [
-    {
-      "title": "Power-aware DevOps",
-      "description": "Embed energy signals into CI/CD so developers see the impact of changes without slowing delivery."
+  "languages": {
+    "en": {
+      "headline": "Power-aware DevOps & sustainable software",
+      "tagline": "PhD researcher in Bolzano exploring feedback loops for greener software and resilient real-time systems.",
+      "siteDescription": "Notes on power-aware DevOps, greener software, and real-time systems research by Alessandro Aneggi.",
+      "location": "Bolzano, Italy",
+      "summary": [
+        "Bolzano-based PhD candidate at the Free University of Bozen-Bolzano designing developer-facing energy feedback loops.",
+        "Explores how CI/CD telemetry and real-time systems can stay reliable while exposing power consumption to teams.",
+        "Open to collaborations on sustainable software, DevOps automation, and energy-aware tooling."
+      ],
+      "focus": [
+        {
+          "title": "Power-aware DevOps",
+          "description": "Embed energy signals into CI/CD so developers see the impact of changes without slowing delivery."
+        },
+        {
+          "title": "Real-time systems",
+          "description": "Reduce big-bang integration risk in fast-moving environments through tighter feedback loops."
+        },
+        {
+          "title": "Sustainable software",
+          "description": "Blend performance, reliability, and energy measurements to guide engineering choices."
+        }
+      ],
+      "experience": [
+        "PhD · Free University of Bozen-Bolzano (2024–now)",
+        "MSc Researcher · University of Klagenfurt (2023–2024)",
+        "Master's in Software Engineering · University of Bolzano (2020–2023)",
+        "Master's in Net Economy · University of Trento (2009–2012)",
+        "Bachelor in Engineering · University of Trento (2004–2008)"
+      ]
     },
-    {
-      "title": "Real-time systems",
-      "description": "Reduce big-bang integration risk in fast-moving environments through tighter feedback loops."
-    },
-    {
-      "title": "Sustainable software",
-      "description": "Blend performance, reliability, and energy measurements to guide engineering choices."
+    "it": {
+      "headline": "DevOps attento ai consumi e software sostenibile",
+      "tagline": "Dottorando a Bolzano: esploro feedback loop per software piu verde e sistemi real-time resilienti.",
+      "siteDescription": "Note su DevOps attento all'energia, software piu sostenibile e ricerca sui sistemi real-time di Alessandro Aneggi.",
+      "location": "Bolzano, Italia",
+      "summary": [
+        "Dottorando a Bolzano, progetto sistemi di feedback energetico pensati per gli sviluppatori.",
+        "Studio come la telemetria CI/CD e i sistemi real-time possano restare affidabili mostrando i consumi.",
+        "Aperto a collaborazioni su software sostenibile, automazione DevOps ed energy-aware tooling."
+      ],
+      "focus": [
+        {
+          "title": "DevOps attento ai consumi",
+          "description": "Porto segnali energetici dentro la CI/CD cosi gli sviluppatori vedono l'impatto senza rallentare il delivery."
+        },
+        {
+          "title": "Sistemi real-time",
+          "description": "Ridurre il rischio di integrazioni big-bang in ambienti veloci con feedback loop piu stretti."
+        },
+        {
+          "title": "Software sostenibile",
+          "description": "Unire performance, affidabilita ed energia per guidare le scelte ingegneristiche."
+        }
+      ],
+      "experience": [
+        "PhD · Libera Universita di Bolzano (2024–oggi)",
+        "Ricercatore MSc · Universita di Klagenfurt (2023–2024)",
+        "Laurea magistrale in Ingegneria del Software · Universita di Bolzano (2020–2023)",
+        "Master in Net Economy · Universita di Trento (2009–2012)",
+        "Laurea in Ingegneria · Universita di Trento (2004–2008)"
+      ]
     }
-  ],
-  "experience": [
-    "PhD · Free University of Bozen-Bolzano (2024–now)",
-    "MSc Researcher · University of Klagenfurt (2023–2024)",
-    "Master's in Software Engineering · University of Bolzano (2020–2023)",
-    "Master's in Net Economy · University of Trento (2009–2012)",
-    "Bachelor in Engineering · University of Trento (2004–2008)"
-  ]
+  }
 }

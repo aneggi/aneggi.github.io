@@ -1,6 +1,10 @@
 ---
-import profile from '@src/data/profile.json';
+import { getProfile } from '@src/data/profile';
+import { DEFAULT_LANG, type Lang } from '@src/i18n/config';
+
 const today = new Date();
+const { lang = DEFAULT_LANG } = Astro.props as { lang?: Lang };
+const profile = getProfile(lang);
 ---
 
 <footer class='container mt-8'>

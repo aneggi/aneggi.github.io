@@ -6,6 +6,7 @@ tags:
   - sustainability
   - research-notes
   - green
+lang: en
 ---
 
 Recent highlights from my reading queue:

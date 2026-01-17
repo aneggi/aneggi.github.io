@@ -1,0 +1,42 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '@src/layouts/BaseLayout.astro';
+import PublicationItem from '@src/components/PublicationItem.astro';
+import { getProfile } from '@src/data/profile';
+import { getUiCopy } from '@src/i18n/ui';
+import { resolveLang, SUPPORTED_LANGS, type Lang } from '@src/i18n/config';
+
+export function getStaticPaths() {
+  return SUPPORTED_LANGS.map((lang: Lang) => ({ params: { lang } }));
+}
+
+const lang = resolveLang(Astro.params.lang);
+const profile = getProfile(lang);
+const copy = getUiCopy(lang);
+
+const publications = (await getCollection('publications'))
+  .filter((entry) => entry.data.lang === lang)
+  .sort((a: CollectionEntry<'publications'>, b: CollectionEntry<'publications'>) =>
+    b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  );
+
+const title = `${copy.publications.title} — ${profile.name}`;
+const description = copy.publications.description;
+---
+
+<BaseLayout title={title} description={description} lang={lang}>
+  <div class='container'>
+    <div class="mb-10">
+      <h1 class="text-3xl font-bold mb-2">{title}</h1>
+      <p class="text-zinc-700 dark:text-zinc-300 text-lg">{description}</p>
+    </div>
+    <div>
+      {
+        publications.map((publication) => (
+          <PublicationItem publication={publication} lang={lang} />
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>

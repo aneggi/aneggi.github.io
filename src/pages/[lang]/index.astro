@@ -1,0 +1,111 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '@src/layouts/BaseLayout.astro';
+import Prose from '@src/components/Prose.astro';
+import PostItem from '@src/components/PostItem.astro';
+import PublicationItem from '@src/components/PublicationItem.astro';
+import { getProfile } from '@src/data/profile';
+import { getUiCopy } from '@src/i18n/ui';
+import { resolveLang, SUPPORTED_LANGS, type Lang, withLangPrefix } from '@src/i18n/config';
+import Ava from '@src/assets/img/alessandro_a.jpg';
+
+type BlogPost = CollectionEntry<'blog'>;
+type PubEntry = CollectionEntry<'publications'>;
+
+export function getStaticPaths() {
+  return SUPPORTED_LANGS.map((lang: Lang) => ({ params: { lang } }));
+}
+
+const lang = resolveLang(Astro.params.lang);
+const profile = getProfile(lang);
+const copy = getUiCopy(lang);
+
+const posts = (await getCollection('blog'))
+  .filter((entry) => entry.data.lang === lang)
+  .sort((a: BlogPost, b: BlogPost) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 4);
+
+const publications = (await getCollection('publications'))
+  .filter((entry) => entry.data.lang === lang)
+  .sort((a: PubEntry, b: PubEntry) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 4);
+
+const latestPost = posts[0];
+const latestPublication = publications[0];
+const title = `${profile.name} - ${profile.headline}`;
+const description = profile.siteDescription;
+---
+
+<BaseLayout title={title} description={description} lang={lang}>
+  <div class='container'>
+    <div class='w-full md:flex md:items-center gap-16 mb-10'>
+      <div class="text-pretty leading-9">
+        <h1 class="text-4xl font-bold mb-4">{copy.home.greeting} {profile.name}.</h1>
+        <Prose>
+          <div class="text-lg">
+            <p class="text-xl leading-relaxed">{profile.tagline}</p>
+            {
+              profile.summary.map((item) => (
+                <p>{item}</p>
+              ))
+            }
+            <div class="flex flex-wrap gap-3 mt-3">
+              <a class="underline font-semibold" href={`mailto:${profile.email}`}>Email</a>
+              <a class="underline font-semibold" href={profile.social.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+              <a class="underline font-semibold" href={profile.orcid} target="_blank" rel="noopener noreferrer">ORCID</a>
+            </div>
+          </div>
+        </Prose>
+      </div>
+      <Image src={Ava} alt={profile.name} width={300} loading="eager" class="rounded-3xl rotate-3 mx-4 md:mx-0"/>
+    </div>
+    <main>
+      <div class="grid gap-6 md:grid-cols-2 mb-10">
+        {
+          latestPost && (
+            <div class="rounded-2xl border dark:border-zinc-700 bg-white dark:bg-zinc-900 p-4 shadow-sm">
+              <p class="text-sm uppercase tracking-wide text-zinc-500 dark:text-zinc-400">{copy.home.latestPost}</p>
+              <PostItem post={latestPost} lang={lang} />
+            </div>
+          )
+        }
+        {
+          latestPublication && (
+            <div class="rounded-2xl border dark:border-zinc-700 bg-white dark:bg-zinc-900 p-4 shadow-sm">
+              <p class="text-sm uppercase tracking-wide text-zinc-500 dark:text-zinc-400">{copy.home.latestPublication}</p>
+              <PublicationItem publication={latestPublication} lang={lang} />
+            </div>
+          )
+        }
+      </div>
+      <div class='mt-6 mb-12'>
+        <div class="flex justify-between gap-2 border-b mb-1 dark:border-b-zinc-700">
+          <h2 class="text-lg font-bold mb-3">{copy.home.recentPosts}</h2>
+          <a href={withLangPrefix('/posts/', lang)} class="inline-block py-2 underline dark:prose-invert">{copy.home.allPosts}</a>
+        </div>
+        <div>
+          {
+            posts.map((post: BlogPost) => (
+              <PostItem post={post} lang={lang} />
+            ))
+          }      
+        </div>
+      </div>
+      <div class='mt-10 mb-4'>
+        <div class="flex justify-between gap-2 border-b mb-1 dark:border-b-zinc-700">
+          <h2 class="text-lg font-bold mb-3">{copy.home.recentPublications}</h2>
+          <a href={withLangPrefix('/publications/', lang)} class="inline-block py-2 underline dark:prose-invert">{copy.home.allPublications}</a>
+        </div>
+        <div>
+          {
+            publications.map((publication: PubEntry) => (
+              <PublicationItem publication={publication} lang={lang} />
+            ))
+          }
+        </div>
+      </div>
+    </main>
+  </div>
+</BaseLayout>

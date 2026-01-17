@@ -8,6 +8,7 @@ tags:
   - microservices
   - git-metadata
   - architecture
+lang: en
 ---
 
 Authors: A. Righi, A. Aneggi, X. Li, A. Janes.

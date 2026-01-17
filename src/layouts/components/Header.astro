@@ -1,29 +1,36 @@
 ---
 import HeaderLink from './HeaderLink.astro';
+import LanguageToggle from './LanguageToggle.astro';
 import { Image } from 'astro:assets';
 import AvaLogo from '@src/assets/img/alessandro_a_small.jpg';
-import profile from '@src/data/profile.json';
+import { getProfile } from '@src/data/profile';
+import { getUiCopy } from '@src/i18n/ui';
+import { DEFAULT_LANG, type Lang, withLangPrefix } from '@src/i18n/config';
+
+const { lang = DEFAULT_LANG, currentPath = '/' } = Astro.props as { lang?: Lang; currentPath?: string };
+const profile = getProfile(lang);
+const copy = getUiCopy(lang);
 
 const menu = [
   {
-		link: '/about/',
-		label: 'About'
+		link: withLangPrefix('/about/', lang),
+		label: copy.menu.about
 	},
 	{
-		link: '/posts/',
-		label: 'Posts'
+		link: withLangPrefix('/posts/', lang),
+		label: copy.menu.posts
 	},
   {
-    link: '/publications/',
-    label: 'Publications',
+    link: withLangPrefix('/publications/', lang),
+    label: copy.menu.publications,
   },
 	{
-		link: '/projects/',
-		label: 'Projects'
+		link: withLangPrefix('/projects/', lang),
+		label: copy.menu.projects
 	},
 	{
-		link: '/tags/',
-		label: 'Tags'
+		link: withLangPrefix('/tags/', lang),
+		label: copy.menu.tags
 	},
 ];
 
@@ -44,13 +51,13 @@ const socialLinks = [
 	<div class='container'>
 		<nav class='flex gap-4 items-center justify-between py-3'>
 			<h2 class='m-0'>
-				<a href='/' class='flex gap-4 items-center text-xl font-black uppercase'>
+				<a href={withLangPrefix('/', lang)} class='flex gap-4 items-center text-xl font-black uppercase'>
 					<!-- You can use your site logo, rounded ava or simply your site name here-->
           <Image src={AvaLogo} alt='Your site name' class="rounded-full w-11 border-white border-2 shadow-lg"/> 
 					<!-- {SITE_TITLE} -->
 				</a>
 			</h2>
-			<div class='flex items-center'>
+			<div class='flex items-center gap-2'>
         <div class="flex">
           {
             socialLinks.map((item) => (
@@ -87,6 +94,7 @@ const socialLinks = [
             ))
           }
         </div>
+        <LanguageToggle lang={lang} currentPath={currentPath} />
 				<button class='p-3' id='themeToggle' aria-label='Theme mode'>
 					<svg
 						class='sun'
@@ -123,15 +131,15 @@ const socialLinks = [
 			</div>
 		</nav>
     <div class='fixed top-3 w-auto max-w-full px-3 left-1/2 -translate-x-1/2 z-[999]'>
-      <div class="flex px-2.5 bg-white/90 dark:bg-zinc-900/75 backdrop-blur-md leading-tight rounded-full border dark:border-zinc-700">
-        <div class="px-2.5 text-sm">
-          <HeaderLink class="py-3 flex items-center" href="/" aria-label="Home">
+      <div class="flex overflow-x-auto no-scrollbar px-2.5 bg-white/90 dark:bg-zinc-900/75 backdrop-blur-md leading-tight rounded-full border dark:border-zinc-700 whitespace-nowrap items-center gap-1">
+        <div class="px-2.5 text-sm shrink-0">
+          <HeaderLink class="py-3 flex items-center" href={withLangPrefix('/', lang)} aria-label="Home">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
           </HeaderLink>
         </div>
         {
           menu.map((item) => (
-            <div class='px-2.5 text-sm'>
+            <div class='px-2.5 text-sm shrink-0'>
               <HeaderLink class="py-3 flex items-center" href={item.link}>
                 {item.label}
               </HeaderLink>
@@ -152,6 +160,12 @@ const socialLinks = [
 		.dark #themeToggle .moon {
 			display: block;
 		}
+    .no-scrollbar {
+      scrollbar-width: none;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
 	</style>
 
 	<script is:inline>

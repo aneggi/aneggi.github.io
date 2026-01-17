@@ -1,5 +1,9 @@
 ---
-const { headings, maxLevel = 3 } = Astro.props;
+import { getUiCopy } from '@src/i18n/ui';
+import { DEFAULT_LANG, type Lang } from '@src/i18n/config';
+
+const { headings, maxLevel = 3, lang = DEFAULT_LANG } = Astro.props as { headings: any; maxLevel?: number; lang?: Lang };
+const copy = getUiCopy(lang);
 const toc = buildToc(headings);
 function buildToc(headings: any) {
 	const _toc: any = [];
@@ -21,7 +25,7 @@ function buildToc(headings: any) {
 ---
 
 <nav class='toc sticky top-4 py-2 lg:-ml-3'>
-	<h3 class='font-extrabold uppercase mb-1 px-3 text-sm'>On This Page</h3>
+	<h3 class='font-extrabold uppercase mb-1 px-3 text-sm'>{copy.toc}</h3>
 	<ul class='toc-list max-h-[calc(100vh-70px)] overflow-auto text-[.825rem] text-[var(--color-content-secondary)]'>
 		{
 			toc.map((heading: any) => (
