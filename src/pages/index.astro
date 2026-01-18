@@ -1,6 +1,5 @@
 ---
 import { DEFAULT_LANG, withLangPrefix } from '../i18n/config';
 
-const target = withLangPrefix('/', DEFAULT_LANG);
-return Astro.redirect(target);
+Astro.redirect(withLangPrefix('/', DEFAULT_LANG));
 ---

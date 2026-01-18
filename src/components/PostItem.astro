@@ -5,7 +5,7 @@ import type { CollectionEntry } from 'astro:content';
 import { withLangPrefix, DEFAULT_LANG, type Lang, stripLangFromSlug } from '@src/i18n/config';
 
 type BlogPost = CollectionEntry<'blog'>;
-const { post, lang = DEFAULT_LANG }: { post: BlogPost; lang?: Lang } = Astro.props;
+const { post, lang = DEFAULT_LANG } = Astro.props as { post: BlogPost; lang?: Lang };
 const postSlug = stripLangFromSlug(post.slug || post.id);
 ---
 <div class='flex flex-col sm:flex-row gap-2 sm:items-center  border-b py-2 mb-1 capitalize dark:border-b-zinc-700'>        

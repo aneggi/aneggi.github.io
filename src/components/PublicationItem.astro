@@ -2,10 +2,9 @@
 import type { CollectionEntry } from 'astro:content';
 import FormattedDate from './FormattedDate.astro';
 import { slugify, tagColorClass } from '@src/utils';
-import { withLangPrefix, DEFAULT_LANG, type Lang, stripLangFromSlug } from '@src/i18n/config';
+import { withLangPrefix, DEFAULT_LANG, type Lang } from '@src/i18n/config';
 
 const { publication, lang = DEFAULT_LANG } = Astro.props as { publication: CollectionEntry<'publications'>; lang?: Lang };
-const pubSlug = stripLangFromSlug(publication.slug || publication.id);
 const { title, description, pubDate, venue, link, tags } = publication.data;
 ---
 <div class='flex flex-col gap-1 border-b py-2 mb-1 dark:border-b-zinc-700'>

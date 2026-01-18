@@ -8,7 +8,7 @@ const { href = '', class: className, ...props } = Astro.props as Props;
 
 const { pathname } = Astro.url;
 const normalize = (value: string) => value.replace(/\/+$/, '') || '/';
-const normalizedHref = normalize(href);
+const normalizedHref = normalize(typeof href === 'string' ? href : href?.toString() ?? '');
 const normalizedPath = normalize(pathname);
 const parts = normalizedPath.split('/').filter(Boolean);
 const strippedLangPath = SUPPORTED_LANGS.includes(parts[0] as Lang) ? '/' + parts.slice(1).join('/') : normalizedPath;

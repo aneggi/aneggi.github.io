@@ -6,7 +6,7 @@ import { getProfile } from '@src/data/profile';
 import { getUiCopy } from '@src/i18n/ui';
 import { resolveLang, SUPPORTED_LANGS, type Lang, stripLangFromSlug, withLangPrefix } from '@src/i18n/config';
 import { slugify } from '@src/utils';
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 
 export function getStaticPaths() {
   return SUPPORTED_LANGS.map((lang: Lang) => ({ params: { lang } }));

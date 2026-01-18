@@ -4,7 +4,7 @@ import PostItem from './PostItem.astro';
 import { DEFAULT_LANG, type Lang } from '@src/i18n/config';
 
 type BlogPost = CollectionEntry<'blog'>;
-const { posts, lang = DEFAULT_LANG }: { posts: BlogPost[]; lang?: Lang } = Astro.props;
+const { posts, lang = DEFAULT_LANG } = Astro.props as { posts: BlogPost[]; lang?: Lang };
 
 function groupPostsByYear(posts: BlogPost[]) {
   const grouped = posts.reduce((acc, post) => {

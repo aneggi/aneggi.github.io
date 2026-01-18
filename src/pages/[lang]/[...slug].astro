@@ -9,7 +9,7 @@ import TableOfContent from '@src/components/widgets/TableOfContent.astro';
 import { slugify } from '@src/utils';
 import { loadEnv } from 'vite';
 import { render } from 'astro:content';
-import { resolveLang, type Lang, withLangPrefix, stripLangFromSlug } from '@src/i18n/config';
+import { resolveLang, withLangPrefix, stripLangFromSlug } from '@src/i18n/config';
 import { getUiCopy } from '@src/i18n/ui';
 
 const { GISCUS_REPO, GISCUS_REPO_ID, GISCUS_CATEGORY, GISCUS_CATEGORY_ID } = loadEnv(process.env.NODE_ENV || 'production', process.cwd(), '');
