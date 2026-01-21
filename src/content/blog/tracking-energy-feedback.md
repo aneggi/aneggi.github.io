@@ -2,8 +2,8 @@
 title: "Tracking energy feedback for developers"
 seoTitle: "Energy feedback loops for developers"
 description: Notes on building feedback loops that expose power consumption while teams ship features.
-pubDate: 2025-01-10T09:00:00Z
-updatedDate: 2025-01-12T15:00:00Z
+date: '2025-01-10'
+updatedDate: '2025-01-12'
 tags:
   - energy
   - devops

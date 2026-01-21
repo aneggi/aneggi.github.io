@@ -24,7 +24,7 @@ const copy = getUiCopy(lang);
 
 const posts = (await getCollection('blog'))
   .filter((entry) => entry.data.lang === lang)
-  .sort((a: BlogPost, b: BlogPost) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .sort((a: BlogPost, b: BlogPost) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 4);
 
 const publications = (await getCollection('publications'))

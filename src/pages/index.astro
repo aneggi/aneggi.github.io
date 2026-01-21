@@ -1,5 +1,35 @@
 ---
 import { DEFAULT_LANG, withLangPrefix } from '../i18n/config';
 
-Astro.redirect(withLangPrefix('/', DEFAULT_LANG));
+const fallbackPath = withLangPrefix('/', DEFAULT_LANG);
+const italianPath = withLangPrefix('/', 'it');
 ---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Redirecting...</title>
+    <meta http-equiv="refresh" content={`0;url=${fallbackPath}`} />
+    <link rel="canonical" href={fallbackPath} />
+    <script>
+      {`
+        (function () {
+          const fallback = ${JSON.stringify(fallbackPath)};
+          const italian = ${JSON.stringify(italianPath)};
+          const navLang = navigator.language || (navigator.languages && navigator.languages[0]) || '';
+          const lang = navLang.toLowerCase().startsWith('it') ? italian : fallback;
+          if (window.location.pathname !== lang) {
+            window.location.replace(lang);
+          }
+        })();
+      `}
+    </script>
+  </head>
+  <body>
+    <main class="container mx-auto p-6 text-center">
+      <p>Redirecting... <a class="underline" href={fallbackPath}>Go to English</a> · <a class="underline" href={italianPath}>Vai alla versione italiana</a></p>
+    </main>
+  </body>
+</html>

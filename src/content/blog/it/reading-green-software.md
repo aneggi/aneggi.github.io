@@ -1,7 +1,7 @@
 ---
 title: "Lista di letture: software piu verde"
 description: Appunti sintetici da articoli e paper su software sostenibile.
-pubDate: 2025-01-05T08:30:00Z
+date: '2025-01-05'
 lang: it
 translationOf: reading-green-software
 tags:

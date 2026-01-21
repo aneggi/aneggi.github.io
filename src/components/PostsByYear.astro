@@ -8,7 +8,7 @@ const { posts, lang = DEFAULT_LANG } = Astro.props as { posts: BlogPost[]; lang?
 
 function groupPostsByYear(posts: BlogPost[]) {
   const grouped = posts.reduce((acc, post) => {
-    const year = post.data.pubDate.getFullYear();
+    const year = post.data.date.getFullYear();
     if (!acc[year]) {
       acc[year] = [];
     }
@@ -20,7 +20,7 @@ function groupPostsByYear(posts: BlogPost[]) {
     .sort(([a], [b]) => Number(b) - Number(a))
     .map(([year, posts]) => ({
       year: Number(year),
-      posts: posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()),
+      posts: posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime()),
     }));
 }
 

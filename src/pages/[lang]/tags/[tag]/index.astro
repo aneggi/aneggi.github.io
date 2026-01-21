@@ -38,7 +38,7 @@ const copy = getUiCopy(lang);
 
 const allPosts: BlogPost[] = (await getCollection('blog'))
   .filter((entry) => entry.data.lang === lang)
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const taggedPosts = allPosts.filter((post) => post.data.tags?.map((tag) => slugify(tag)).includes(tag || ''));
 
 const allPubs: PubEntry[] = (await getCollection('publications')).filter((entry) => entry.data.lang === lang);

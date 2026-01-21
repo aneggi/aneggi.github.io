@@ -1,8 +1,8 @@
 ---
 title: "Feedback energetico per gli sviluppatori"
 description: Note su come esporre i consumi di potenza ai team mentre consegnano feature.
-pubDate: 2025-01-10T09:00:00Z
-updatedDate: 2025-01-12T15:00:00Z
+date: '2025-01-10'
+updatedDate: '2025-01-12'
 lang: it
 translationOf: tracking-energy-feedback
 tags:

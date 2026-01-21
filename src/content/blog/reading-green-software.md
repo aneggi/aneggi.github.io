@@ -1,7 +1,7 @@
 ---
 title: "Reading list: greener software engineering"
 description: A rolling set of takeaways from papers and blog posts about sustainable software.
-pubDate: 2025-01-05T08:30:00Z
+date: '2025-01-05'
 tags:
   - sustainability
   - research-notes
