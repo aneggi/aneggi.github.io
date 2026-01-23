@@ -38,7 +38,7 @@ const socialLinks = [
   { name: 'GitHub', href: profile.social.github, icon: 'github' },
   { name: 'LinkedIn', href: profile.social.linkedin, icon: 'linkedin' },
   { name: 'YouTube', href: profile.social.youtube, icon: 'youtube' },
-  { name: 'Scholar', href: profile.social.scholar, icon: 'scholar' },
+  { name: 'DBLP', href: profile.social.scholar, icon: 'dblp' },
 ];
 ---
 
@@ -84,9 +84,10 @@ const socialLinks = [
                   )
                 }
                 {
-                  item.icon === 'scholar' && (
+                  item.icon === 'dblp' && (
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                      <path d="M18.69 6.86 12 0 5.31 6.86a5.41 5.41 0 0 0-1.79 4.01 5.36 5.36 0 0 0 1.79 4.01L12 20.89l6.69-6.01a5.36 5.36 0 0 0 1.8-4.03 5.4 5.4 0 0 0-1.8-4.01zM12 16.92a5.36 5.36 0 0 1-4.73-2.78l4.73-4.23 4.73 4.23A5.36 5.36 0 0 1 12 16.92z"/>
+                      <path d="M3 3h18v18H3z" fill="#1f6feb" />
+                      <path d="M6.5 6.5h3v3h-3zm0 5h3v6h-3zm8-5h3v11h-3zm-4 0h3v3h-3zm0 5h3v6h-3z" fill="#fff" />
                     </svg>
                   )
                 }

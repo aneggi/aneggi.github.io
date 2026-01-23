@@ -3,7 +3,7 @@ title: "GreenDevLoop: Power-Aware Software Development with CI/CD, AI, and Feedb
 description: "Positioning power-aware feedback loops across CI/CD with AI support to guide greener software development."
 pubDate: 2025-05-01T00:00:00Z
 venue: "European Conference on Software Architecture"
-link: "https://scholar.google.com/citations?view_op=view_citation&hl=it&oe=ASCII&user=OgX2LvkAAAAJ&citation_for_view=OgX2LvkAAAAJ:9yKSN-GCB0IC"
+link: "https://link.springer.com/chapter/10.1007/978-3-032-04403-7_7"
 tags:
   - green-software
   - devops

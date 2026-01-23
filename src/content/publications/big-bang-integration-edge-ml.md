@@ -3,7 +3,7 @@ title: "Lessons from a Big-Bang Integration: Challenges in Edge Computing and Ma
 description: "Case study on integration pitfalls when combining edge computing with machine learning workloads."
 pubDate: 2025-03-01T00:00:00Z
 venue: "International Conference on Agile Software Development"
-link: "https://scholar.google.com/citations?view_op=view_citation&hl=it&oe=ASCII&user=OgX2LvkAAAAJ&citation_for_view=OgX2LvkAAAAJ:u-x6o8ySG0sC"
+link: "https://arxiv.org/abs/2507.17270"
 tags:
   - edge-computing
   - machine-learning
