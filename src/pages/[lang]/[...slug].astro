@@ -2,7 +2,6 @@
 import { type CollectionEntry, getCollection } from 'astro:content';
 import Prose from '@src/components/Prose.astro';
 import BaseLayout from '@src/layouts/BaseLayout.astro';
-import { Image } from 'astro:assets';
 import FormattedDate from '@src/components/FormattedDate.astro';
 import AboutTheAuthor from '@src/components/widgets/AboutTheAuthor.astro';
 import TableOfContent from '@src/components/widgets/TableOfContent.astro';
@@ -26,9 +25,7 @@ export async function getStaticPaths() {
 }
 type Props = CollectionEntry<'blog'>;
 const post = Astro.props;
-const {
-	data: { title, seoTitle, description, coverImage, date, updatedDate, tags }
-} = post;
+const { data: { title, seoTitle, description, coverImage, date, updatedDate, tags } } = post;
 const { Content, headings } = await render(post);
 const lang = resolveLang(Astro.params.lang);
 const copy = getUiCopy(lang);
@@ -37,9 +34,10 @@ const translationKey = post.data.translationOf || cleanSlug;
 const allPosts = await getCollection('blog');
 const alternate = allPosts.find((entry) => (entry.data.translationOf || stripLangFromSlug(entry.slug)) === translationKey && entry.data.lang !== post.data.lang);
 const alternateUrl = alternate ? withLangPrefix(`/${stripLangFromSlug(alternate.slug) || alternate.id}/`, alternate.data.lang) : undefined;
+const coverImageSrc = coverImage || undefined;
 ---
 
-<BaseLayout title={seoTitle || title} description={description} image={coverImage?.src || undefined} lang={lang}>
+<BaseLayout title={seoTitle || title} description={description} image={coverImageSrc || undefined} lang={lang}>
 	<div class='container lg:flex gap-10'>
 		<main
 			class='overflow-hidden grow'
@@ -84,9 +82,9 @@ const alternateUrl = alternate ? withLangPrefix(`/${stripLangFromSlug(alternate.
                 </a>
               </div>
             )}
-					</div>
-          <div class='py-3 overflow-hidden'>
-            {coverImage && <Image class='rounded-3xl w-full m-0 lg:mb-2' src={coverImage} alt={title} loading='eager' />}
+          </div>
+					<div class='py-3 overflow-hidden'>
+            {coverImageSrc && <img class='rounded-3xl w-full m-0 lg:mb-2' src={coverImageSrc} alt={title} loading='eager' />}
           </div>
 					<Content />
 				</Prose>

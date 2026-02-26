@@ -8,24 +8,28 @@ type BlogPost = CollectionEntry<'blog'>;
 const { post, lang = DEFAULT_LANG } = Astro.props as { post: BlogPost; lang?: Lang };
 const postSlug = stripLangFromSlug(post.slug || post.id);
 ---
-<div class='flex flex-col sm:flex-row gap-2 sm:items-center  border-b py-2 mb-1 capitalize dark:border-b-zinc-700'>        
-  <div class='text-zinc-700 text-sm w-24 dark:text-zinc-300 shrink-0'>
+<div class='flex flex-wrap items-start gap-x-3 gap-y-2 border-b py-2 mb-1 dark:border-b-zinc-700'>
+  <div class='text-zinc-700 text-sm dark:text-zinc-300 shrink-0 whitespace-nowrap'>
     <FormattedDate date={post.data.date} lang={lang} />
   </div>
-  <h3 class='font-medium grow'>
-    <a href={withLangPrefix(`/${postSlug}/`, lang)}>
+  <h3 class='font-medium leading-snug min-w-0 flex-1 basis-56'>
+    <a class='hover:underline underline-offset-4 break-words' href={withLangPrefix(`/${postSlug}/`, lang)}>
       {post.data.title}
     </a>
   </h3>
-  <div class='flex gap-2 shrink-0'>
-    {
-      (post.data.tags || [] )?.map((tag: string) => (
-        <a
-          class={`border rounded-2xl text-sm no-underline px-2 py-0.5 transition-all duration-700 hover:opacity-80 ${tagColorClass(tag)}`}
-          href={withLangPrefix(`/tags/${slugify(tag)}/`, lang)}>
-          {tag}
-        </a>
-      ))
-    }
-  </div>
+  {
+    (post.data.tags || []).length > 0 && (
+      <div class='flex flex-wrap gap-2 basis-full sm:basis-auto sm:justify-end'>
+        {
+          (post.data.tags || []).map((tag: string) => (
+            <a
+              class={`border rounded-2xl text-xs no-underline px-2 py-0.5 whitespace-nowrap transition-all duration-700 hover:opacity-80 ${tagColorClass(tag)}`}
+              href={withLangPrefix(`/tags/${slugify(tag)}/`, lang)}>
+              {tag}
+            </a>
+          ))
+        }
+      </div>
+    )
+  }
 </div>

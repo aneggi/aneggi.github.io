@@ -12,7 +12,8 @@ const blog = defineCollection({
       date: z.coerce.date(),
       updatedDate: z.coerce.date().optional(),
       tags: z.array(z.string()).optional(),
-      coverImage: image().optional(),
+      // Social preview image; accept a string path/URL to avoid asset resolution errors on absolute paths.
+      coverImage: z.string().optional(),
       lang: langEnum.default('en'),
       translationOf: z.string().optional(),
     }),

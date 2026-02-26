@@ -1,53 +1,11 @@
 ---
-import BaseLayout from '@src/layouts/BaseLayout.astro';
-import ProjectList from '@src/components/ProjectList.astro';
-import { getProjects } from '@src/data/projects';
-import { getProfile } from '@src/data/profile';
-import { getUiCopy } from '@src/i18n/ui';
-import { resolveLang, SUPPORTED_LANGS, type Lang, stripLangFromSlug, withLangPrefix } from '@src/i18n/config';
-import { slugify } from '@src/utils';
-import { getCollection } from 'astro:content';
+import { resolveLang, SUPPORTED_LANGS, type Lang, withLangPrefix } from '@src/i18n/config';
 
 export function getStaticPaths() {
   return SUPPORTED_LANGS.map((lang: Lang) => ({ params: { lang } }));
 }
 
 const lang = resolveLang(Astro.params.lang);
-const profile = getProfile(lang);
-const copy = getUiCopy(lang);
 
-const title = `${copy.projects.title} — ${profile.name}`;
-const description = copy.projects.description;
-const projects = getProjects(lang);
-
-// Optional: surface related blog posts for each project by translation key
-const allPosts = await getCollection('blog');
-const relatedByProject: Record<string, string | undefined> = {};
-projects.forEach((project) => {
-  if (project.postLink) return;
-  const key = slugify(project.name);
-  const post = allPosts.find(
-    (entry) => (entry.data.translationOf || stripLangFromSlug(entry.slug)) === key && entry.data.lang === lang
-  );
-  relatedByProject[project.name] = post ? withLangPrefix(`/${stripLangFromSlug(post.slug || post.id)}/`, lang) : undefined;
-});
-
-const localizedProjects = projects.map((project) => ({
-  ...project,
-  postLink: project.postLink || relatedByProject[project.name],
-}));
+Astro.redirect(withLangPrefix('/tags/project/', lang));
 ---
-
-<BaseLayout
-	title={title}
-	description={description}
-  lang={lang}
->
-  <div class='container'>
-    <div class="mb-10">
-      <h1 class="text-3xl font-bold mb-2">{copy.projects.title}</h1>
-      <p class="text-zinc-700 dark:text-zinc-300 text-lg">{copy.projects.lead}</p>
-    </div>
-    <ProjectList projects={localizedProjects} lang={lang}/>
-  </div>
-</BaseLayout>
