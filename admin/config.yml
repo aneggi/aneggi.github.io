@@ -6,7 +6,7 @@ backend:
   auth_endpoint: <OAUTH-PATH>
 media_folder: "public/uploads"
 public_folder: "/uploads" # For project pages, set to "/<REPO>/uploads"
-site_url: https://<OWNER>.github.io/<REPO>/
+site_url: https://aneggi.it/
 publish_mode: editorial_workflow
 collections:
   - name: "blog"

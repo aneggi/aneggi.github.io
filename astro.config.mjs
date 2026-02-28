@@ -6,12 +6,12 @@ import { autoNewTabExternalLinks } from './src/autoNewTabExternalLinks';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://aneggi.github.io',
+  site: 'https://aneggi.it',
   integrations: [mdx(), sitemap(), tailwind()],
   markdown: {
     extendDefaultPlugins: true,
     rehypePlugins: [[autoNewTabExternalLinks, {
-      domain: 'aneggi.github.io'
+      domain: 'aneggi.it'
     }]]
   }
 });
