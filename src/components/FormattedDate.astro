@@ -4,18 +4,20 @@ import { DEFAULT_LANG, type Lang } from '@src/i18n/config';
 interface Props {
 	date: Date;
   lang?: Lang;
+  precision?: 'day' | 'month' | 'year';
 }
 
-const { date, lang = DEFAULT_LANG } = Astro.props as Props;
+const { date, lang = DEFAULT_LANG, precision = 'day' } = Astro.props as Props;
 const locale = lang === 'it' ? 'it-IT' : 'en-US';
+const datetime = date.toISOString().slice(0, precision === 'year' ? 4 : precision === 'month' ? 7 : 10);
 ---
 
-<time datetime={date.toISOString()}>
+<time datetime={datetime}>
 	{
 		date.toLocaleDateString(locale, {
 			year: 'numeric',
-			month: 'short',
-			day: '2-digit',
+			month: precision === 'year' ? undefined : 'short',
+			day: precision === 'day' ? '2-digit' : undefined,
 			timeZone: 'UTC',
 		})
 	}

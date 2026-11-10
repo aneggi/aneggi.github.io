@@ -26,6 +26,7 @@ const publications = defineCollection({
       title: z.string(),
       description: z.string(),
       pubDate: z.coerce.date(),
+      pubDatePrecision: z.enum(['day', 'month', 'year']).default('day'),
       venue: z.string().optional(),
       link: z.string().url().optional(),
       tags: z.array(z.string()).optional(),

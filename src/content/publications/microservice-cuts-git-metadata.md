@@ -1,9 +1,9 @@
 ---
 title: "Demonstration Paper: Avoiding Wrong Microservice Cuts Via Git Metadata Analysis"
 description: "Demonstrates how mining Git metadata can warn about risky microservice boundaries before they solidify."
-pubDate: 2025-04-01T00:00:00Z
+pubDate: 2025-07-21T00:00:00Z
 venue: "IEEE International Conference on Service-Oriented System Engineering"
-link: "https://ieeexplore.ieee.org/document/11126130/"
+link: "https://doi.org/10.1109/SOSE67019.2025.00010"
 tags:
   - microservices
   - git-metadata
